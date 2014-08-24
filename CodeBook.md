@@ -1,35 +1,63 @@
 Course-Getting-and-Cleaning-Data
 ================================
 
-This file describes the variables, the data, and any transformations or work that I have performed to clean up the data.
+This is a code book that describes the variables, the data, and any transformations or work that you performed to clean up the data.
 
-The site where the data was obtained:
-http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
-The data for the project:
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+The data source
 
-The run_analysis.R script performs the following steps to clean the data:
+Original data: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+Original description of the dataset: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+Data Set Information
 
-Read X_train.txt, y_train.txt and subject_train.txt from the "./UCI HAR Dataset/train" folder and store them in traindata, trainlabels and trainsubject variables respectively.
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data.
 
-Read X_test.txt, y_test.txt and subject_test.txt from the "./UCI HAR Dataset/test" folder and store them in testdata, testlabels and testsubject variables respectively.
+The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
 
-Concatenate testdata to traindata to generate a 10299x561 data frame, mergedata; concatenate testtabels to trainlabels to generate a 10299x1 data frame, mergelabels; concatenate testsubject to trainsubject to generate a 10299x1 data frame, mergesubjects.
+The data
 
-Read the features.txt file from the "/data" folder and store the data in a variable called features. We only extract the measurements on the mean and standard deviation. This results in a 66 indices list. We get a subset of mergedata with the 66 corresponding columns.
+The dataset includes the following files:
 
-Clean the column names of the subset. We remove the "()" and "-" symbols in the names, as well as make the first letter of "mean" and "std" a capital letter "M" and "S" respectively.
+'README.txt'
 
-Read the activity_labels.txt file from the "./UCI HAR Dataset"" folder and store the data in a variable called activity.
+'features_info.txt': Shows information about the variables used on the feature vector.
 
-Clean the activity names in the second column of activity. We first make all names to lower cases. If the name has an underscore between letters, we remove the underscore and capitalize the letter immediately after the underscore.
+'features.txt': List of all features.
 
-Transform the values of mergelabels according to the activity data frame.
+'activity_labels.txt': Links the class labels with their activity name.
 
-Combine the mergesubjects, mergelabels and mergedata by column to get a new cleaned 10299x68 data frame, cleanData. Properly name the first two columns, "subject" and "activity". The "subject" column contains integers that range from 1 to 30 inclusive; the "activity" column contains 6 kinds of activity names; the last 66 columns contain measurements that range from -1 to 1 exclusive.
+'train/X_train.txt': Training set.
 
-Write the cleanedData out to "merged_data.txt" file in current working directory.
+'train/y_train.txt': Training labels.
 
-Finally, generate a second independent tidy data set with the average of each measurement for each activity and each subject. We have 30 unique subjects and 6 unique activities, which result in a 180 combinations of the two. Then, for each combination, we calculate the mean of each measurement with the corresponding combination. So, after initializing the results data frame and performing the two for-loops, we get a 180x68 data frame.
+'test/X_test.txt': Test set.
 
-Write the results out to "cleanData_with_mean.txt" file in current working directory.
+'test/y_test.txt': Test labels.
+
+The following files are available for the train and test data. Their descriptions are equivalent.
+
+'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
+
+'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis.
+
+'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration.
+
+'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second.
+
+Transformation details
+
+There are 5 parts:
+
+1) Merges the training and the test sets to create one data set.
+2) Extracts only the measurements on the mean and standard deviation for each measurement.
+3) Uses descriptive activity names to name the activities in the data set
+4) Appropriately labels the data set with descriptive activity names.
+5) Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+How run_analysis.R implements the above steps:
+
+a) Require reshapre2 and data.table librareis.
+b) Load both test and train data
+c) Load the features and activity labels.
+d) Extract the mean and standard deviation column names and data.
+e) Process the data. There are two parts processing test and train data respectively.
+f) Merge data set.
