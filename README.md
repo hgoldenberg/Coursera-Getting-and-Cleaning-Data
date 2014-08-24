@@ -1,20 +1,28 @@
 Coursera-Getting-and-Cleaning-Data
 ==================================
 
-This file describes how run_analysis.R script works.
+Course Project:
 
-1° unzip the data from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
+You should create one R script called run_analysis.R that does the following.
 
-  a) Make sure the folder "UCI HAR Dataset" and the run_analysis.R script are both in the current working directory.
+Merges the training and the test sets to create one data set.
 
-2° use source("run_analysis.R") command in RStudio.
+Extracts only the measurements on the mean and standard deviation for each measurement.
 
-3° you will find two output files are generated in the current working directory:
+Uses descriptive activity names to name the activities in the data set.
 
-  a) merged_data.txt (7.9 Mb): it contains a data frame called cleanedData with 10299*68 dimension.
+Appropriately labels the data set with descriptive activity names.
 
-  b) cleanData_with_mean.txt (220 Kb): it contains a data frame called result with 180*68 dimension.
+Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-Finally, use data <- read.table("cleanData_with_mean.txt") command in RStudio to read the file. 
+Steps to work on this course project:
 
-Since we are required to get the average of each variable for each activity and each subject, and there are 6 activities in total and 30 subjects in total, we have 180 rows with all combinations for each of the 66 features.
+Download the data source and put into a folder on your local drive. You'll have a UCI HAR Dataset folder.
+
+Put run_analysis.R in the parent folder of UCI HAR Dataset, then set it as your working directory using setwd() function in RStudio.
+
+Run source("run_analysis.R"), then it will generate a new file tiny_data.txt in your working directory.
+
+Dependencies:
+
+run_analysis.R file will help you to install the dependencies automatically. It depends on reshape2 and data.table.
